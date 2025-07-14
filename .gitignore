@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Angular
+frontend-repo/dist/
+frontend-repo/.angular/cache/
+frontend-repo/.angular/
+
+# React Native
+mobile-repo/android/
+mobile-repo/ios/
+mobile-repo/build/
+mobile-repo/expo-debug.log
+mobile-repo/.expo/
+mobile-repo/.expo-shared/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# Misc
+.idea/
+*.iml
+
+# AI/ML
+ai-service-repo/.env
+ai-service-repo/__pycache__/ 
