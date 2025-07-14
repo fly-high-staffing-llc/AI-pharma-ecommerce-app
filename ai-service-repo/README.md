@@ -1,3 +1,13 @@
+# Pharmacy E-Commerce Platform – AI Service
+
+## 🚀 Prerequisites & Setup
+
+**All developers must follow the [SETUP_GUIDE.md](./SETUP_GUIDE.md) before starting development.**
+
+This guide covers all required tools, installation steps, and troubleshooting for Mac and Windows.
+
+---
+
 # 🤖 Pharmacy AI Service
 
 AI-powered service for chatbot, recommendations, and image recognition for Pharmacy E-Commerce Platform

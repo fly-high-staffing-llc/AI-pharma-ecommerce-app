@@ -1,4 +1,12 @@
-# 📱 Pharmacy E-Commerce Mobile App
+# Pharmacy E-Commerce Platform – Mobile
+
+## 🚀 Prerequisites & Setup
+
+**All developers must follow the [SETUP_GUIDE.md](./SETUP_GUIDE.md) before starting development.**
+
+This guide covers all required tools, installation steps, and troubleshooting for Mac and Windows.
+
+---
 
 React Native mobile application for Pharmacy E-Commerce Platform
 

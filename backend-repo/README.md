@@ -1,4 +1,12 @@
-# 💊 Pharmacy E-Commerce Backend
+# Pharmacy E-Commerce Platform – Backend
+
+## 🚀 Prerequisites & Setup
+
+**All developers must follow the [SETUP_GUIDE.md](./SETUP_GUIDE.md) before starting development.**
+
+This guide covers all required tools, installation steps, and troubleshooting for Mac and Windows.
+
+---
 
 Node.js Microservices Architecture for Pharmacy E-Commerce Platform
 
