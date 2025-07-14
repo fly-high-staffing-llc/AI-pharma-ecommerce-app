@@ -24,148 +24,108 @@ This guide covers all required tools, installation steps, and troubleshooting fo
 
 ---
 
-# 🤖 Pharmacy AI Service
+# 📚 AI Service Documentation
 
-AI-powered service for chatbot, recommendations, and image recognition for Pharmacy E-Commerce Platform
+## 1. Required API Endpoints
 
-## 🏗️ Architecture
+| Endpoint                        | Method | Description                                 | Input Example                          | Output Example |
+|----------------------------------|--------|---------------------------------------------|----------------------------------------|----------------|
+| `/api/ai/chat`                  | POST   | Chatbot interaction (LLM)                   | `{ userId, message }`                  | `{ response, timestamp }` |
+| `/api/ai/recommendations`       | GET    | Product recommendations by symptom          | `?symptom=cough&userId=123`            | `{ products: [...] }` |
+| `/api/ai/image/predict`         | POST   | Pill image recognition                      | `multipart/form-data` (image upload)   | `{ drugName, description }` |
+| `/api/ai/prescription/ocr`      | POST   | Prescription OCR (extract drug names)       | `multipart/form-data` (image upload)   | `{ drugs: [...] }` |
+| `/api/ai/chat-sessions`         | GET    | Get chat history for a user                 | `?userId=123`                          | `{ sessions: [...] }` |
 
-- **Framework**: Node.js + Express.js
-- **LLM**: Mistral 7B (via Ollama)
-- **Image Recognition**: TensorFlow.js
-- **Real-time**: Socket.IO
-- **Storage**: Cloudinary
+---
 
-## 📦 Project Structure
+## 2. Recommended Code File Structure
 
 ```
-ai-service/
+ai-service-repo/
 ├── src/
-│   ├── services/
-│   │   ├── chatbot.service.ts      # LLM Chatbot Service
-│   │   ├── recommendation.service.ts # Product Recommendations
-│   │   ├── image.service.ts        # Image Recognition
-│   │   └── prescription.service.ts # Prescription Analysis
-│   ├── routes/
-│   │   ├── chat.ts                 # Chatbot Routes
-│   │   ├── recommendations.ts      # Recommendation Routes
-│   │   ├── image.ts               # Image Upload Routes
-│   │   └── prescription.ts        # Prescription Routes
-│   ├── middleware/
-│   │   ├── auth.ts                # Authentication
-│   │   ├── upload.ts              # File Upload
-│   │   └── rateLimit.ts           # Rate Limiting
-│   ├── utils/
-│   │   ├── logger.ts              # Logging
-│   │   ├── validation.ts          # Input Validation
-│   │   └── imageProcessor.ts      # Image Processing
-│   ├── models/
-│   │   ├── chat.ts                # Chat Models
-│   │   └── prescription.ts        # Prescription Models
-│   ├── config/
-│   │   ├── ollama.ts              # Ollama Configuration
-│   │   ├── tensorflow.ts          # TensorFlow Configuration
-│   │   └── cloudinary.ts          # Cloudinary Configuration
-│   └── index.ts                   # Main Entry Point
-├── models/                        # ML Models
-│   ├── pill-recognition/          # Pill Recognition Model
-│   ├── prescription-ocr/          # Prescription OCR Model
-│   └── symptom-classifier/        # Symptom Classification
-├── tests/
+│   ├── config/           # Configuration files (API keys, model paths)
+│   ├── middleware/       # Express middlewares (auth, rate limit, logger)
+│   ├── models/           # Mongoose models (ChatSession, Prescription, etc.)
+│   ├── routes/           # Express route handlers for each endpoint
+│   ├── services/         # Business logic (chatbot, recommendations, OCR, image)
+│   ├── types/            # TypeScript types/interfaces
+│   ├── utils/            # Utility functions (file upload, validation)
+│   └── index.ts          # App entry point
+├── tests/                # Unit, integration, and e2e tests
 │   ├── unit/
 │   ├── integration/
 │   └── e2e/
-├── docs/
-│   ├── api.md                     # API Documentation
-│   ├── models.md                  # Model Documentation
-│   └── deployment.md              # Deployment Guide
 ├── package.json
-├── Dockerfile
-└── README.md
+├── README.md
+└── ...
 ```
 
-## 🚀 Quick Start
+---
 
-### Prerequisites
-- Node.js 18+
-- Ollama (for local LLM)
-- Docker (optional)
+## 3. Database Structure (MongoDB Collections)
 
-### Installation
+| Collection         | Fields                                                                 |
+|--------------------|-----------------------------------------------------------------------|
+| `chat_sessions`    | `_id, userId, messages: [{ sender, text, timestamp }]`                |
+| `prescriptions`    | `_id, userId, imageUrl, drugs: [String], status, createdAt`           |
+| `analytics`        | `pageViews, conversions, topProducts, userEvents`                     |
 
-1. **Clone Repository**
-```bash
-git clone <ai-service-repo-url>
-cd ai-service
-```
+**Relationships:**
+- users → chat_sessions: 1-to-many
+- users → prescriptions: 1-to-many
 
-2. **Install Dependencies**
-```bash
-npm install
-```
+---
 
-3. **Setup Ollama (Local LLM)**
-```bash
-# Install Ollama
-curl -fsSL https://ollama.com/install.sh | sh
+## 4. Example: Chatbot Endpoint
 
-# Download Mistral model
-ollama pull mistral
+**POST `/api/ai/chat`**
+- **Input:**
+  ```json
+  {
+    "userId": "user123",
+    "message": "What can I take for a headache?"
+  }
+  ```
+- **Output:**
+  ```json
+  {
+    "response": "Based on your symptoms, you may consider Paracetamol. Please consult a pharmacist.",
+    "timestamp": "2024-06-01T12:34:56Z"
+  }
+  ```
 
-# Start Ollama service
-ollama serve
-```
+---
 
-4. **Environment Setup**
-```bash
-cp .env.example .env
-# Configure your environment variables
-```
+## 5. Example: Pill Image Recognition Endpoint
 
-5. **Start Development**
-```bash
-npm run dev
-```
+**POST `/api/ai/image/predict`**
+- **Input:**
+  - `multipart/form-data` with an image file
+- **Output:**
+  ```json
+  {
+    "drugName": "Paracetamol 500mg",
+    "description": "Pain reliever and fever reducer"
+  }
+  ```
 
-## 🔧 Services
+---
 
-### Chatbot Service
-AI-powered pharmacy assistant for customer queries.
+## 6. Example: Prescription OCR Endpoint
 
-**Features:**
-- Symptom-based recommendations
-- Medication information
-- Drug interactions
-- General health advice
-- Order tracking assistance
+**POST `/api/ai/prescription/ocr`**
+- **Input:**
+  - `multipart/form-data` with a prescription image
+- **Output:**
+  ```json
+  {
+    "drugs": ["Amoxicillin 250mg", "Ibuprofen 400mg"]
+  }
+  ```
 
-**Endpoints:**
-- `POST /api/chat` - Send message to chatbot
-- `POST /api/chat/stream` - Stream chat responses
-- `GET /api/chat/history` - Get chat history
+---
 
-### Recommendation Service
-AI-powered product recommendations based on user behavior and symptoms.
-
-**Features:**
-- Symptom-based recommendations
-- Purchase history analysis
-- Collaborative filtering
-- Content-based filtering
-
-**Endpoints:**
-- `POST /api/recommendations/symptoms` - Get recommendations by symptoms
-- `POST /api/recommendations/user` - Get personalized recommendations
-- `GET /api/recommendations/popular` - Get popular products
-
-### Image Recognition Service
-Pill and prescription image analysis.
-
-**Features:**
-- Pill identification
-- Prescription OCR
-- Image preprocessing
-- Confidence scoring
-
-**Endpoints:**
-- `
+## 7. Useful Links
+- [Project Repository](https://github.com/fly-high-staffing-llc/AI-pharma-ecommerce-app)
+- [SETUP_GUIDE.md](./SETUP_GUIDE.md)
+- [Technical Standards](./TECHNICAL_STANDARDS.md)
