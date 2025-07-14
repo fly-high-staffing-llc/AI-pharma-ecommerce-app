@@ -1,5 +1,21 @@
 # Pharmacy E-Commerce Platform – Frontend
 
+## 🚀 Quick Start
+
+Clone the repository using HTTPS (recommended for most users):
+
+```sh
+git clone https://github.com/fly-high-staffing-llc/AI-pharma-ecommerce-app.git
+```
+
+Or use SSH (for advanced users with SSH keys):
+
+```sh
+git clone git@github.com:fly-high-staffing-llc/AI-pharma-ecommerce-app.git
+```
+
+Both methods are secure and supported. Use HTTPS if you are unsure.
+
 ## 🚀 Prerequisites & Setup
 
 **All developers must follow the [SETUP_GUIDE.md](./SETUP_GUIDE.md) before starting development.**

@@ -1,5 +1,21 @@
 # Pharmacy E-Commerce Platform – Mobile
 
+## 🚀 Quick Start
+
+Clone the repository using HTTPS (recommended for most users):
+
+```sh
+git clone https://github.com/fly-high-staffing-llc/AI-pharma-ecommerce-app.git
+```
+
+Or use SSH (for advanced users with SSH keys):
+
+```sh
+git clone git@github.com:fly-high-staffing-llc/AI-pharma-ecommerce-app.git
+```
+
+Both methods are secure and supported. Use HTTPS if you are unsure.
+
 ## 🚀 Prerequisites & Setup
 
 **All developers must follow the [SETUP_GUIDE.md](./SETUP_GUIDE.md) before starting development.**
@@ -127,40 +143,6 @@ mobile/
 ├── metro.config.js
 ├── package.json
 └── README.md
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+
-- Expo CLI
-- iOS Simulator / Android Emulator
-
-### Installation
-
-1. **Clone Repository**
-```bash
-git clone <mobile-repo-url>
-cd mobile
-```
-
-2. **Install Dependencies**
-```bash
-npm install
-```
-
-3. **Start Development**
-```bash
-npx expo start
-```
-
-4. **Run on Device/Simulator**
-```bash
-# iOS
-npx expo run:ios
-
-# Android
-npx expo run:android
 ```
 
 ## 📱 Features
